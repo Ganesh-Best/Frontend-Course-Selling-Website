@@ -1,13 +1,137 @@
-body {
+body{
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+header{
+  background:white;
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  border:1px solid white;
+  box-shadow: .5px .5px 1px 1px grey;
+  
+}
+.header-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width:95%;
+  margin:auto;
+    
+  
+}
+.userprofile{
+  line-height: 0;
+}
+.userprofile img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  font-size: 20px;
+  color:white;
+}
+.buttons a{
+  background: #fff;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  margin-right: 15px;
+  display: inline-block;
+  background: #e8f1fd;
+  color:#5f6162;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.sidebar{
+  background: #e8f1fd;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 70px;
+  z-index: 2;
+}
+.sidebar .links:hover {
+  color: black;
+}
+.buttons{
+  display: flex;
+  width: 40%;
+  justify-content: right;  
+  gap:25px; 
+}
+
+
+.menu-bar{
+  height: 30;
+  margin-left: 30px;
+}
+.menu-bar svg{
+  color: #fff;
+  font-size: 30px;
+ 
+}
+.main-area{
+  margin-left: 315px;
+  padding: 24px;
+  z-index: 1;
+  padding-top: 90px;
+
+}
+.sidebar-ul{
+  padding: 10px 20px;
+  list-style: none;
+}
+.links svg{
+  padding-right: 12px;
+}
+.links{
+  text-decoration: none;
+  margin-bottom: 15px;
+  display: flex;
+  background: #dcdcdc;
+  padding: 12px;
+  border-radius: 5px;
+  color: #5f6162;
+  align-items: center;
+  font-size: 17px;
+  background: #e8f1fd;
+}
+@media(min-width:992px){
+.menu-bar{
+  display: none;
+}
+.sidebar{
+  display: block;
+}
+.loginsignup{
+display: none;       
+}
+}
+@media(max-width:991.98px){
+  .main-area{
+      margin-left: 0px;
+  }
+  .menu-bar{
+    background: hsl(214, 74%, 85%);
+    padding:2px;
+  }
+  .header-wrapper{
+    width:80%;
+    margin:auto;
+  }
+  
+ 
+  /* .sidebar{
+      display: none;
+  } */
+  .loginsignup{
+      display: block;
+  }
+
+  .btn-auth{
+      display: none!important;
+  }
 }
