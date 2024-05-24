@@ -66,7 +66,7 @@ function Signin() {
                  setAlertMessage("Login successfully")
                
                  if(admin == "admin")
-                   navigate2('/home')
+                   navigate2('/adminhome')
                   
 
                  if(admin == "user"){

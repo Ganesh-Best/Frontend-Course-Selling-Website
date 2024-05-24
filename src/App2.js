@@ -13,7 +13,7 @@ import {BrowserRouter as Router , Route,Routes, Navigate} from 'react-router-dom
 import Addcourse from './Components/Addcourse'
 import Courses from './Components/Courses' ;
 import Course from './Components/Course';
-import Home from './Components/Home';
+import AdminHome from './Components/AdminHome';
 import { UserContext } from './Components/Context/UserContext'
 import { useContext } from 'react'
 //import { useState } from 'react'
@@ -23,6 +23,8 @@ import Button from '@mui/material/Button';
 import Setting from './Components/Setting';
 import { SlEqualizer } from "react-icons/sl";
 import { SlSettings } from "react-icons/sl";
+
+//import Home from './Components/Home'
 
 function App2() {
     let {userInfo}   =    useContext(UserContext);
@@ -114,15 +116,16 @@ function Menu() {
          
           
             <Routes>
-                <Route  path="/" element={ <Home  />} />
+                <Route  path="/" element={ userInfo?<AdminHome/>:<Signin/>} />
                 <Route  path="/signup" element={ <Signup/>} />
-                <Route  path="/home" element={ userInfo?<Home/>:<Signin/>} />
+                <Route  path="/adminhome" element={ userInfo?<AdminHome/>:<Signin/>} />
                 <Route  path="/signin" element={<Signin/>} /> 
                 <Route  path="/addcourse" element={userInfo?<Addcourse/>:<Signin/>} />
                 <Route  path="/Courses" element={userInfo?<Courses/>:<Signin/>} />
                 <Route  path="/setting" element={userInfo?<Setting/>:<Signin/>} />
                 <Route  path="/viewcourse/:courseId" element={userInfo?<Viewcourse/>:<Signin/>} />
                 <Route  path="/Course/:courseId" element={ userInfo?<Course/>:<Signin/>} />
+                {/* <Route  path="/home" element={ userInfo?<Home/> :<Signin/>} /> */}
             </Routes>     
      </div>
             
@@ -149,7 +152,7 @@ function Sidebar( { toggleSidebar }) {
         <aside className='sidebar'>
            <div>
             <ul className='sidebar-ul'>
-              <li><Link to="/home" className='links'><IoHomeOutline /> Home</Link></li>
+              <li><Link to="/adminhome" className='links'><IoHomeOutline /> Home</Link></li>
               <li><Link to="/courses" className='links'><FiBook />Courses</Link></li>
               <li><Link to="/addcourse" className='links' style={hideButton}><SlEqualizer /> Add course</Link></li>
               <li><Link to="/setting" className='links' style={hideButton} ><SlSettings />Setting</Link></li>
