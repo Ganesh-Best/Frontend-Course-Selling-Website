@@ -1,128 +1,37 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
+import { React } from 'react';
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
-const images = [
-  {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
-    imgPath:
-      'https://appxcontent.kaxa.in/subject/2023-12-11-0.16596609933733064.jpeg',
-  },
-  {
-    label: 'Bird',
-    imgPath:
-      'https://appxcontent.kaxa.in/subject/2023-12-11-0.7162866567693291.jpeg',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'https://appxcontent.kaxa.in/subject/2023-12-11-0.46695085017508653.jpeg',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'https://appxcontent.kaxa.in/subject/2023-12-11-0.16596609933733064.jpeg',
-  },
-];
 
 function ImageSlider() {
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+ return <>
+    
+    <div style={{width:"95%",margin:'auto'  }}  id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel" >
+    <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div className="carousel-inner">
+    <div className="carousel-item active">
+      <img style={{borderRadius:"25px"}}  src="https://appxcontent.kaxa.in/subject/2023-12-11-0.16596609933733064.jpeg" className="d-block w-100" alt="..."/>
+    </div>
+    <div className="carousel-item">
+      <img style={{borderRadius:"25px"}} src="https://appxcontent.kaxa.in/subject/2023-12-11-0.7162866567693291.jpeg" className="d-block w-100" alt="..."/>
+    </div>
+    <div className="carousel-item">
+      <img style={{borderRadius:"25px"}} src="https://appxcontent.kaxa.in/subject/2023-12-11-0.46695085017508653.jpeg" className="d-block w-100" alt="..."/>
+    </div>
+  </div>
+  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span style={{color:"black"}}  className="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Previous</span>
+  </button>
+  <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span style={{color:"black"}}  className="carousel-control-next-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Next</span>
+  </button>
+</div>
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
-
-  return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: 50,
-          pl: 2,
-          bgcolor: 'background.default',
-        }}
-      >
-        <Typography>{images[activeStep].label}</Typography>
-      </Paper>
-      <AutoPlaySwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-      >
-        {images.map((step, index) => (
-          <div key={step.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  height: 255,
-                  display: 'block',
-                  maxWidth: 400,
-                  overflow: 'hidden',
-                  width: '100%',
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))}
-      </AutoPlaySwipeableViews>
-      <MobileStepper
-        steps={maxSteps}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
-        }
-      />
-    </Box>
-  );
+ </>
 }
 
 export default ImageSlider;

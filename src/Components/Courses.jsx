@@ -1,84 +1,73 @@
-import { Card, Typography, Button } from '@mui/material';
-import React, { useEffect, useState,useContext } from 'react'; 
-import { useNavigate, useNavigation } from 'react-router-dom';
-import { UserContext } from './Context/UserContext';
-import Axios from 'axios';
+import React from 'react'
+import useAxiosFetch from './useAxiosFetch' ;
+import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
 
-   
 
-function Courses() {
-    const [courses,setCourses] = useState([])
-    const [status, setStatus] = useState(false);
-    const {userInfo,setUserInfo} = useContext(UserContext);   
+function Courses() { 
+    const URL = 'http://localhost:9000/user/course'
+    const token = JSON.parse(localStorage.getItem('userInfo')).token;
+   const option = { headers:{
+                     'Content-Type':'application/json',
+                     'token':token
+                  } }
+      
+     const {courses,error,loading}  =  useAxiosFetch(URL,option) ;
+
+
+if(loading)
+return  <div>
+    Loading .......
+</div> 
+
+    return (
+        <div sx={{marginTop:"40px"}}>  
+            <Typography variant="h3" sx={{marginBottom:"30px",textAlign:"center"}} color="initial">Courses</Typography>  
+           <div style={{display:"flex",flexWrap:"wrap",columnGap:'30px',rowGap:'20px',justifyContent:"center",alignItems:"center",marginTop:"20px",marginBottom:"15px"}} >
+               {courses.map((course)=>(
+                  <CourseCard course = {course} />
+                ))}       
  
-    useEffect(()=>{
-
-          let url = "http://localhost:9000/admin/courses"
-                   
-          console.log("context Api data",userInfo)
-                
-              ;(async()=>{
-
-                      
-                     const response  = await Axios.get(url,{
-                               headers:{
-                               'Content-Type': 'application/json',
-                               "token": JSON.parse(localStorage.getItem("userInfo")).token
-                              }
-                             })
-
-                             console.log(response.data.courses);
-                             setStatus(true);
-                             setCourses(response.data.courses);
-                  
-              }
-              )()
-
-          
-           
-
-    },[])
-
-    if(!status)
-     return <div>
-            <Typography variant="h3" color="initial">Loading ....... </Typography>
-     </div>
-     else if(!courses.length){
-              return <>
-             
-           <Typography variant="h3" color="initial" sx={{marginTop:"20px"}} > You have not created Course :  Please Create Course  </Typography>
-           </>
-     }else
-        return (
-        <>  <Typography variant="h3" textAlign={"center"} color="initial">Courses</Typography> 
-    <div style={{"display":"flex","flexDirection":"row","flexWrap":"wrap",justifyContent:"center"}}>
-       
-       
-              
-            {  courses.map((course,i)=><COURSES  course={course}  />) }
-
-    </div>
-    </>
+           </div>
+        </div>
   )
+
+
 }
 
-function COURSES(props){
-  const navigator = useNavigate();
+function CourseCard({course}){
+
+
+    return <Card sx={{ width:330 , maxWidth: 345,borderRadius:"15px" }}>
+                <CardMedia
+                        sx={{ height: 180 }}
+                        image= {course.image}
+                        title="green iguana"
+                />
+                <CardContent>
+                <Typography gutterBottom variant="h6" sx={{fontWeight:"bold",marginBottom:"14px"}} component="div">
+                        {course.title}
+                </Typography>
+                <Typography gutterBottom variant="h6" sx={{fontWeight:"200",marginBottom:"14px"}} component="div">
+                        {course.description}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{fontWeight:"700",marginBottom:"-10px"}}>
+                        {course.price}
+                </Typography>
+                </CardContent>
+                <CardActions sx={{paddingLeft:"20px",paddingRight:"20px"}}>
+                <Button variant="contained" color="primary" sx={{width:"100%",borderRadius:"20px",padding:"7px"}}>
+                  View Details
+                </Button>
                 
-  return <Card style={{width:"330px",minHeight:"200px",margin:"10px", display:"flex",flexDirection:"column", alignItems:"center",rowGap:"4px",padding:"20px 3px "}} >
-        
-        <img src={props.course.image} style={{"width":"230px" ,height:"200px"}}></img>
-       <Typography textAlign={"center"} variant="h6" color="initial">{props.course.title }</Typography>
-       <Typography style={{fontSize:"14px",padding:"15px"}} textAlign={"justify"} variant="h6" color="grey">{props.course.description }</Typography>
-       
-       <Button variant="contained" color="primary" style={{width:"100px"}}
-       onClick={()=>{
-        navigator("/course/"+props.course._id)
-       }}
-       >
-        EDIT  
-       </Button> 
-  </Card>
-}
+                </CardActions>
+  </Card>  
+  }
+
+
 
 export default Courses
