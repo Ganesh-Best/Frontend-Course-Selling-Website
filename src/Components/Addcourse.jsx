@@ -13,7 +13,7 @@ function Addcourse() {
      const {userInfo }  =   useContext(UserContext);
      const [title,setTitle] = useState("") ;
      const [description,setDescription] = useState("");
-     const [syallbus,setSyallbus] = useState("")
+     const [syallabus,setSyallabus] = useState("")
      const [image,setImage] = useState("");
      const [price,setPrice] = useState("");
      const [introVideo ,setIntroVideo ]  = useState("");
@@ -26,7 +26,9 @@ function Addcourse() {
       }
 
       const addCourse = async (e)=>{ 
+
                 const formData =        new FormData()
+
                 formData.append('title', title);
                 formData.append('description',description);
                 formData.append('image',image)
@@ -34,18 +36,22 @@ function Addcourse() {
                 formData.append('file1',file)
                 formData.append('file2',file2)
                 formData.append('introVideo',introVideo)
-                formData.append('syallbus',syallbus);
+                formData.append('syallabus',syallabus);
+                formData.append('published',published);
 
            console.log("Add course butting clicked :")
+           console.log(formData)
 
          const  url = "http://localhost:9000/admin/course"
+            
+         console.log('published status',published);
           
-        
              const response = await   Axios.post(url,formData,{
                 headers:{
                     'Content-Type':'multipart/form-data',
                     'token':userInfo.token
                 }
+                
                })       
 
                console.log(response)
@@ -88,7 +94,7 @@ function Addcourse() {
     <TextField  fullWidth={true} value={price} onChange={event=>setPrice(event.target.value)} id="price" label="price" variant="outlined" /> <br/><br/>
     <div style={{display:'flex',flexDirection:"column",height:'auto'}}>
     <label>Syallabus</label>
-    <RichTextEditor setSyallbus={setSyallbus} />
+    <RichTextEditor setSyallabus={setSyallabus} />
     </div>
     <br/>
     <div style={{display:'flex',flexDirection:"column",height:'auto'}}>

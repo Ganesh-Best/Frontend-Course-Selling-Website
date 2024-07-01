@@ -25,7 +25,7 @@ function useAxiosFetch(url,option={}) {
                 }        
          })()
         
-     }, []); 
+     }, [url]); 
 
     
   return { courses,error,loading }

@@ -56,7 +56,7 @@ function AdminHome() {
          <Typography variant="body1" color="GrayText"> You have created {info.courseCount} courses</Typography>
 
          <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between" ,width:"60%"}} >
-            <Link to="/courses" > <Button variant="text" color="primary" sx={{fontSize:"20px"}} >
+            <Link to="/admincourses" > <Button variant="text" color="primary" sx={{fontSize:"20px"}} >
             View Courses
             </Button>
             </Link>

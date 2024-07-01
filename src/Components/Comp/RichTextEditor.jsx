@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-function RichTextEditor({setSyallbus}){
+function RichTextEditor({setSyallabus}){
   const handleEditorChange = (content, editor) => {
-    setSyallbus(content);
+    setSyallabus(content);
     console.log(content);
   };
 

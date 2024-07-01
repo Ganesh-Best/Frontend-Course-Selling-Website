@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect  } from 'react'
 import ImageSlider from './Comp/ImageSlider.jsx'
 import Typography from '@mui/material/Typography'
 import { Card } from '@mui/material'
@@ -10,6 +10,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   return (
@@ -49,7 +51,7 @@ function Courses(){
 }
 
 function CourseCard({course}){
-
+    const navigate    =  useNavigate();
 
   return <Card sx={{ width:330 , maxWidth: 345,borderRadius:"15px" }}>
               <CardMedia
@@ -66,7 +68,7 @@ function CourseCard({course}){
               </Typography>
               </CardContent>
               <CardActions sx={{paddingLeft:"20px",paddingRight:"20px"}}>
-              <Button variant="contained" color="primary" sx={{width:"100%",borderRadius:"20px",padding:"7px"}}>
+              <Button variant="contained" color="primary" sx={{width:"100%",borderRadius:"20px",padding:"7px"}} onClick={e=>navigate(`/courseDetails/${course._id}`)}>
                 View Details
               </Button>
               
