@@ -26,6 +26,7 @@ import { SlSettings } from "react-icons/sl";
 import Home from './Components/Home'
 import Courses from './Components/Courses';
 import CourseDetails from './Components/CourseDetails';
+import Paymentsuccess from './Components/Paymentsuccess';
 
 function App2() {
     let {userInfo}   =    useContext(UserContext);
@@ -129,6 +130,7 @@ function Menu() {
                 <Route  path="/home" element={ userInfo?<Home/> :<Signin/>} />
                 <Route  path="/courses" element={ userInfo?<Courses/> :<Signin/>} />
                 <Route  path="/coursedetails/:courseId" element={ userInfo?<CourseDetails/> :<Signin/>} /> 
+                <Route  path="/paymentsuccess" element={ userInfo?<Paymentsuccess/> :<Signin/>} />
             </Routes>     
      </div>
             

@@ -140,6 +140,49 @@ function Details({course,error,loading}){
 }
 
 function Purchase({course,loading}){
+ 
+   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+   
+   console.log('userInfo',userInfo)
+
+   const buyCourse = async({amount,id})=>{
+
+       console.log('purchased',amount ,id)
+
+        const {data:{order,key_secret}} = await Axios.post('http://localhost:9000/user/checkout',{},{headers:{
+            token:userInfo.token,
+            amount
+          }})
+              
+           console.log(order,key_secret)
+
+      const options = {
+        "key": key_secret, // Enter the Key ID generated from the Dashboard
+        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Coursea",
+        "description": "Test Transaction",
+        "image": " ",
+        "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "callback_url": `http://localhost:9000/user/paymentverify?email=${userInfo.email}&id=${id}`,
+        "prefill": {
+            "name": userInfo.name,
+            "email": userInfo.email,
+            "contact": "9000090000"
+        },
+        "notes": {
+            "address": "Coursera Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+     
+    const razor  =  new window.Razorpay(options);
+
+    razor.open();
+            
+  }
 
   if(loading)
     return  <div>
@@ -148,7 +191,7 @@ function Purchase({course,loading}){
     </div>
 
     return <div>
-
+   
 <Card sx={{ borderRadius:"30px" ,width:"400px" }}>
       <CardMedia
         sx={{ height: 240 }}
@@ -157,12 +200,12 @@ function Purchase({course,loading}){
       />
       <CardContent sx={{padding:"20px"}}>
         <Typography gutterBottom variant="body2" color="text.secondary" component="div" sx={{fontWeight:"bold"}}>
-          Price
+          Price 
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{fontSize:"20px", marginBottom:"10px"}}>
-        {'\u20B9'}6000
+        {'\u20B9'}{course.price}
         </Typography>
-        <Button variant="contained" color="primary" sx={{display:"block",width:"100%",padding:"10px",borderRadius:"10px"}} >
+        <Button variant="contained" onClick={()=>buyCourse({amount:course.price,id:course.id})} color="primary" sx={{display:"block",width:"100%",padding:"10px",borderRadius:"10px"}} >
           Buy Now
         </Button>
       </CardContent>
