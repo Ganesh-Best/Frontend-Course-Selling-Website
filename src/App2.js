@@ -27,6 +27,8 @@ import Home from './Components/Home'
 import Courses from './Components/Courses';
 import CourseDetails from './Components/CourseDetails';
 import Paymentsuccess from './Components/Paymentsuccess';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import PurchasedCourses from './Components/PurchasedCourses';
 
 function App2() {
     let {userInfo}   =    useContext(UserContext);
@@ -127,9 +129,15 @@ function Menu() {
                 <Route  path="/setting" element={userInfo?<Setting/>:<Signin/>} />
                 <Route  path="/viewcourse/:courseId" element={userInfo?<Viewcourse/>:<Signin/>} />
                 <Route  path="/Course/:courseId" element={ userInfo?<Course/>:<Signin/>} />
-                <Route  path="/home" element={ userInfo?<Home/> :<Signin/>} />
+                <Route  path="/home" element={ <Home/>} />
+                {/* <Route  path="/home" element={ userInfo?<Home/> :<Signin/>} /> */}
                 <Route  path="/courses" element={ userInfo?<Courses/> :<Signin/>} />
-                <Route  path="/coursedetails/:courseId" element={ userInfo?<CourseDetails/> :<Signin/>} /> 
+                
+                {/* Purchased course route , only visible to User not admin   */}
+                <Route  path="/purchased" element={ userInfo?<PurchasedCourses/> :<Signin/>} />
+
+                <Route  path="/coursedetails/:courseId" element={<CourseDetails/> } />  
+                {/* <Route  path="/coursedetails/:courseId" element={ userInfo?<CourseDetails/> :<Signin/>} />  */}
                 <Route  path="/paymentsuccess" element={ userInfo?<Paymentsuccess/> :<Signin/>} />
             </Routes>     
      </div>
@@ -153,12 +161,71 @@ function Sidebar( { toggleSidebar }) {
    let hideButton ={
     display:(userInfo)?"block":"none"
    }
+   
+   if(!userInfo?.role)
+    return (
+      <aside className='sidebar'>
+         <div>
+          <ul className='sidebar-ul'>
+            
+            <li><Link to="/home" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
+
+            <li><Link to="/admincourses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
+            
+            {/* Purchased Course user Page : */}
+            {/* <li><Link to="/purchased" className='links'><FileDownloadIcon color="action" style={{fontSize:"28px"}}  /> Purchases</Link></li> */}
+
+            {/* <li><Link to="/addcourse" className='links' style={hideButton}><SlEqualizer style={{fontSize:"28px"}}  /> Add course</Link></li> */}
+            {/* <li><Link to="/setting" className='links' style={hideButton} ><SlSettings style={{fontSize:"28px"}} />Setting</Link></li> */}
+            {/* <li><Link  className='links' onClick={signOut} style={hideButton} ><SlLogout style={{fontSize:"28px"}} />Sign Out</Link></li> */}
+            
+
+            {/* <li><a href="" className='links loginsignup'><LuLogIn /> Login</a></li>
+            <li><a href="" className='links loginsignup'><LuLogOut />Sign Up</a></li> */}
+          </ul>
+        </div>
+      </aside>
+    );
+
+   if(userInfo?.role == "user")
+    return (
+      <aside className='sidebar'>
+         <div>
+          <ul className='sidebar-ul'>
+            
+            <li><Link to="/home" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
+
+            <li><Link to="/admincourses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
+            
+            {/* Purchased Course user Page : */}
+            <li><Link to="/purchased" className='links'><FileDownloadIcon color="action" style={{fontSize:"28px"}}  /> Purchases</Link></li>
+
+            {/* <li><Link to="/addcourse" className='links' style={hideButton}><SlEqualizer style={{fontSize:"28px"}}  /> Add course</Link></li> */}
+            <li><Link to="/setting" className='links' style={hideButton} ><SlSettings style={{fontSize:"28px"}} />Setting</Link></li>
+            <li><Link  className='links' onClick={signOut} style={hideButton} ><SlLogout style={{fontSize:"28px"}} />Sign Out</Link></li>
+            
+
+            {/* <li><a href="" className='links loginsignup'><LuLogIn /> Login</a></li>
+            <li><a href="" className='links loginsignup'><LuLogOut />Sign Up</a></li> */}
+          </ul>
+        </div>
+      </aside>
+    );
+
+
+    if(userInfo?.role == "admin")
       return (
         <aside className='sidebar'>
            <div>
             <ul className='sidebar-ul'>
+              
               <li><Link to="/adminhome" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
+
               <li><Link to="/admincourses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
+              
+              {/* Purchased Course user Page : */}
+              {/* <li><Link to="/purchased" className='links'><FileDownloadIcon color="action" style={{fontSize:"28px"}}  /> Purchases</Link></li> */}
+
               <li><Link to="/addcourse" className='links' style={hideButton}><SlEqualizer style={{fontSize:"28px"}}  /> Add course</Link></li>
               <li><Link to="/setting" className='links' style={hideButton} ><SlSettings style={{fontSize:"28px"}} />Setting</Link></li>
               <li><Link  className='links' onClick={signOut} style={hideButton} ><SlLogout style={{fontSize:"28px"}} />Sign Out</Link></li>

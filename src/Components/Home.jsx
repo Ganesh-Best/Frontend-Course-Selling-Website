@@ -27,10 +27,10 @@ function Home() {
 
 function Courses(){
 
-   const token = JSON.parse(localStorage.getItem('userInfo')).token;
+  //  const token = JSON.parse(localStorage.getItem('userInfo')).token;
    const option = { headers:{
                      'Content-Type':'application/json',
-                     'token':token
+                     
                   } }
   const {courses,error,loading}   =   useAxiosFetch("http://localhost:9000/user/course",option)
 

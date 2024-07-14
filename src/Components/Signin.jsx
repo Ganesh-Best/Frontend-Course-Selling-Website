@@ -70,7 +70,7 @@ function Signin() {
                   
 
                  if(admin == "user"){
-
+                   navigate2('/home')
                  }
                  
                     

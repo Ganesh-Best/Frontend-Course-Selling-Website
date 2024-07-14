@@ -55,7 +55,7 @@ function Signup() {
                  setAlertMessage(response.data.message);
                  setTimeout(()=>{
                   window.location = "/signin"
-               },5000)  
+               },1000)  
                  
           }
    } catch (error) {

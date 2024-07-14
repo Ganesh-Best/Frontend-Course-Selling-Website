@@ -13,6 +13,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -21,11 +22,10 @@ function CourseDetails() {
     const [value, setValue] = React.useState('1');
     const {courseId} = useParams();
 
-     const token = JSON.parse(localStorage.getItem('userInfo')).token ;
+     
      const URL = 'http://localhost:9000/user/coursedetail';
      const option = {
         headers:{
-            token,
             'Content-Type': 'multipart/form-data',
         }
      }
@@ -140,14 +140,18 @@ function Details({course,error,loading}){
 }
 
 function Purchase({course,loading}){
- 
+   const navigate = useNavigate();
    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
    
    console.log('userInfo',userInfo)
 
    const buyCourse = async({amount,id})=>{
-
-       console.log('purchased',amount ,id)
+        
+    //Checking whether User is logged in or not if not redirect to login page
+     if(!userInfo?.token)
+        return navigate('/signin')
+       
+       console.log('purchased',amount ,userInfo.token,userInfo.role)
 
         const {data:{order,key_secret}} = await Axios.post('http://localhost:9000/user/checkout',{},{headers:{
             token:userInfo.token,
@@ -168,7 +172,7 @@ function Purchase({course,loading}){
         "prefill": {
             "name": userInfo.name,
             "email": userInfo.email,
-            "contact": "9000090000"
+            "contact": ""
         },
         "notes": {
             "address": "Coursera Corporate Office"
@@ -181,6 +185,8 @@ function Purchase({course,loading}){
     const razor  =  new window.Razorpay(options);
 
     razor.open();
+
+
             
   }
 
