@@ -29,6 +29,7 @@ import CourseDetails from './Components/CourseDetails';
 import Paymentsuccess from './Components/Paymentsuccess';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import PurchasedCourses from './Components/PurchasedCourses';
+import Footer from './Components/Footer';
 
 function App2() {
     let {userInfo}   =    useContext(UserContext);
@@ -120,7 +121,7 @@ function Menu() {
          
           
             <Routes>
-                <Route  path="/" element={ userInfo?<AdminHome/>:<Signin/>} />
+                <Route  path="/" element={ <Home/>} />
                 <Route  path="/signup" element={ <Signup/>} />
                 <Route  path="/adminhome" element={ userInfo?<AdminHome/>:<Signin/>} />
                 <Route  path="/signin" element={<Signin/>} /> 
@@ -131,7 +132,7 @@ function Menu() {
                 <Route  path="/Course/:courseId" element={ userInfo?<Course/>:<Signin/>} />
                 <Route  path="/home" element={ <Home/>} />
                 {/* <Route  path="/home" element={ userInfo?<Home/> :<Signin/>} /> */}
-                <Route  path="/courses" element={ userInfo?<Courses/> :<Signin/>} />
+                <Route  path="/courses" element={ <Courses/> } />
                 
                 {/* Purchased course route , only visible to User not admin   */}
                 <Route  path="/purchased" element={ userInfo?<PurchasedCourses/> :<Signin/>} />
@@ -139,7 +140,9 @@ function Menu() {
                 <Route  path="/coursedetails/:courseId" element={<CourseDetails/> } />  
                 {/* <Route  path="/coursedetails/:courseId" element={ userInfo?<CourseDetails/> :<Signin/>} />  */}
                 <Route  path="/paymentsuccess" element={ userInfo?<Paymentsuccess/> :<Signin/>} />
-            </Routes>     
+            </Routes>   
+
+            <Footer/>  
      </div>
             
   
@@ -154,7 +157,7 @@ function Sidebar( { toggleSidebar }) {
     const signOut = useCallback(()=>{
  
         localStorage.removeItem("userInfo");
-         window.location ="/signin";
+         window.location ="/home";
    
    },[])
      
@@ -170,7 +173,7 @@ function Sidebar( { toggleSidebar }) {
             
             <li><Link to="/home" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
 
-            <li><Link to="/admincourses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
+            <li><Link to="/courses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
             
             {/* Purchased Course user Page : */}
             {/* <li><Link to="/purchased" className='links'><FileDownloadIcon color="action" style={{fontSize:"28px"}}  /> Purchases</Link></li> */}
@@ -195,7 +198,7 @@ function Sidebar( { toggleSidebar }) {
             
             <li><Link to="/home" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
 
-            <li><Link to="/admincourses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
+            <li><Link to="/courses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
             
             {/* Purchased Course user Page : */}
             <li><Link to="/purchased" className='links'><FileDownloadIcon color="action" style={{fontSize:"28px"}}  /> Purchases</Link></li>

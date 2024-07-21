@@ -84,7 +84,7 @@ const CourseCard = ({courses})=>{
         <b>{course.title}</b>
         </Typography>
 
-        <Button variant="contained" color="primary" sx={{textTransform:"capitalize",borderRadius:"20px",display:"block",padding:"10px" , width:"100%",marginBottom:"10px"}} >
+        <Button variant="contained" color="primary" onClick={()=>navigate(`/viewcourse/${course._id}`)}  sx={{textTransform:"capitalize",borderRadius:"20px",display:"block",padding:"10px" , width:"100%",marginBottom:"10px"}} >
           View Course          
         </Button>
         <Button variant="contained" onClick={()=>navigate(`/paymentsuccess?id=${course._id}`)}  color="primary" sx={{textTransform:"capitalize" , borderRadius:"20px",display:"block",padding:"10px" , width:"100%",marginBottom:"10px"}} >

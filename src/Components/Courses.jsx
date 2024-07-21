@@ -6,14 +6,14 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 function Courses() { 
     const URL = 'http://localhost:9000/user/course'
-    const token = JSON.parse(localStorage.getItem('userInfo')).token;
+   // const token = JSON.parse(localStorage.getItem('userInfo')).token;
    const option = { headers:{
                      'Content-Type':'application/json',
-                     'token':token
                   } }
       
      const {courses,error,loading}  =  useAxiosFetch(URL,option) ;
@@ -40,27 +40,27 @@ return  <div>
 }
 
 function CourseCard({course}){
-
-
-    return <Card sx={{ width:330 , maxWidth: 345,borderRadius:"15px" }}>
+     const navigate = useNavigate();
+     
+    return <Card sx={{ width:330 , maxWidth: 345,borderRadius:"15px" , paddingBottom:"13px"}}>
                 <CardMedia
                         sx={{ height: 180 }}
                         image= {course.image}
                         title="green iguana"
                 />
                 <CardContent>
-                <Typography gutterBottom variant="h6" sx={{fontWeight:"bold",marginBottom:"14px"}} component="div">
+                <Typography gutterBottom variant="h6" sx={{textTransform:'capitalize',fontWeight:"bold",marginBottom:"14px"}} component="div">
                         {course.title}
                 </Typography>
-                <Typography gutterBottom variant="h6" sx={{fontWeight:"200",marginBottom:"14px"}} component="div">
+                <Typography gutterBottom variant="subtitle1" sx={{fontWeight:"200",marginBottom:"14px",whiteSpace:'nowrap',overflow: 'hidden',textOverflow: 'ellipsis'}} component="div">
                         {course.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{fontWeight:"700",marginBottom:"-10px"}}>
-                        {course.price}
+                         &#8377;{course.price}
                 </Typography>
                 </CardContent>
                 <CardActions sx={{paddingLeft:"20px",paddingRight:"20px"}}>
-                <Button variant="contained" color="primary" sx={{width:"100%",borderRadius:"20px",padding:"7px"}}>
+                <Button variant="contained" color="primary" onClick={()=>navigate(`/coursedetails/${course._id}`)}  sx={{width:"100%",borderRadius:"20px",padding:"10px"}}>
                   View Details
                 </Button>
                 

@@ -32,7 +32,7 @@ function Courses(){
                      'Content-Type':'application/json',
                      
                   } }
-  const {courses,error,loading}   =   useAxiosFetch("http://localhost:9000/user/course",option)
+  const {courses,error,loading}   =   useAxiosFetch("http://localhost:9000/user/courses/feature",option)
 
    console.log(courses,error,loading)
 
@@ -64,7 +64,7 @@ function CourseCard({course}){
                       {course.title}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{fontWeight:"700",marginBottom:"-10px"}}>
-                      {course.price}
+              &#8377;{course.price}
               </Typography>
               </CardContent>
               <CardActions sx={{paddingLeft:"20px",paddingRight:"20px"}}>

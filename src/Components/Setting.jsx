@@ -1,14 +1,35 @@
-import * as React from 'react';
+import { useState,useEffect } from 'react'; 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
+import Axios from 'axios';
 
 export default function Setting() {
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = useState('1');
+  
+  const [currentPassword,setCurrentPassword] = useState()
+  const [name,setName] = useState();
+  const [email,setEmail] = useState();
+  const [mobile,setMobile] = useState();
+  const [newPassword , setNewPassword] =  useState();
+  const [confirmPassword ,setConfirmPassword ]  = useState();
+   
+  const Url = "";
+
+   useEffect(() => {
+   
+    ;(async()=>{
+                 
+              
+
+    })()
+   
+   }, []);
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -70,7 +91,7 @@ const Security = ()=>{
 
     return <>
        <div>
-
+              Password Change Logic 
        </div>
     </>
 

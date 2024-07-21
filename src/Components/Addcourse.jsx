@@ -20,7 +20,8 @@ function Addcourse() {
      const [file,setFile] = useState("");
      const [file2,setFile2] = useState(""); 
      const [published,setPublished] = useState(false);
-    const myStyle ={
+     const [featured ,setFeatured] = useState(false);
+         const myStyle ={
         "width":"600px",
         "padding":"15px"       
       }
@@ -38,6 +39,7 @@ function Addcourse() {
                 formData.append('introVideo',introVideo)
                 formData.append('syallabus',syallabus);
                 formData.append('published',published);
+                formData.append('featured',featured)
 
            console.log("Add course butting clicked :")
            console.log(formData)
@@ -110,8 +112,8 @@ function Addcourse() {
     <TextField  type='file' name="file2" onChange={(e)=>{setFile2(e.target.files[0]) }}  /> <br/><br/>
     </div>
     <Button  size="large" variant="contained" onClick={addCourse}  >Add Course</Button> 
-    <Button  size="small" variant="outlined" sx={{marginLeft:"20px"}} onClick = {(e)=>setPublished(!published) }  > {(published)?"Published":"Not Published"}</Button>
-    
+    <Button  size="large" variant="outlined" sx={{marginLeft:"20px"}} onClick = {(e)=>setPublished(!published) }  > {(published)?"Published":"Not Published"}</Button>
+    <Button  size="large" variant="outlined" sx={{marginLeft:"20px",textTransform:"capitalize"}} onClick = {(e)=>setFeatured(!featured) }  > {(featured)?"featured":"Not featured"}</Button>    
     </Card>
     
     </div>

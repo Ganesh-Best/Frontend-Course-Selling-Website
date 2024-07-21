@@ -3,6 +3,10 @@ import React, { useEffect, useState,useContext } from 'react';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { UserContext } from './Context/UserContext';
 import Axios from 'axios';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+
 
    
 
@@ -55,30 +59,45 @@ function AdminCourses() {
        
        
               
-            {  courses.map((course,i)=><COURSES  course={course}  />) }
+            
+            <div style={{display:"flex",flexWrap:"wrap",columnGap:'30px',rowGap:'20px',justifyContent:"center",alignItems:"center",marginTop:"20px",marginBottom:"15px"}} >
+               {courses.map((course)=>(
+                  <COURSES course = {course} />
+                ))}       
+ 
+           </div>
 
     </div>
     </>
   )
 }
 
-function COURSES(props){
-  const navigator = useNavigate();
+function COURSES({course}){
+  const navigate = useNavigate();
                 
-  return <Card style={{width:"330px",minHeight:"200px",margin:"10px", display:"flex",flexDirection:"column", alignItems:"center",rowGap:"4px",padding:"20px 3px "}} >
-        
-        <img src={props.course.image} style={{"width":"230px" ,height:"200px"}}></img>
-       <Typography textAlign={"center"} variant="h6" color="initial">{props.course.title }</Typography>
-       <Typography style={{fontSize:"14px",padding:"15px"}} textAlign={"justify"} variant="h6" color="grey">{props.course.description }</Typography>
-       
-       <Button variant="contained" color="primary" style={{width:"100px"}}
-       onClick={()=>{
-        navigator("/course/"+props.course._id)
-       }}
-       >
-        EDIT  
-       </Button> 
-  </Card>
+  return <Card sx={{ width:330 , maxWidth: 345,borderRadius:"15px" , paddingBottom:"13px"}}>
+  <CardMedia
+          sx={{ height: 180 }}
+          image= {course.image}
+          title="green iguana"
+  />
+  <CardContent>
+  <Typography gutterBottom variant="h6" sx={{textTransform:'capitalize',fontWeight:"bold",marginBottom:"14px"}} component="div">
+          {course.title}
+  </Typography>
+  <Typography gutterBottom variant="subtitle1" sx={{fontWeight:"200",marginBottom:"14px",whiteSpace:'nowrap',overflow: 'hidden',textOverflow: 'ellipsis'}} component="div">
+          {course.description}
+  </Typography>
+  
+  </CardContent>
+  <CardActions sx={{paddingLeft:"20px",paddingRight:"20px"}}>
+  <Button variant="contained" color="primary" onClick={()=>navigate(`/course/${course._id}`)}  sx={{width:"100%",borderRadius:"20px",padding:"10px"}}>
+    Edit Course
+  </Button>
+  
+  </CardActions>
+</Card>  
 }
 
 export default AdminCourses
+

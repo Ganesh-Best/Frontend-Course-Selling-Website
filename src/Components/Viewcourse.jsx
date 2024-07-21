@@ -13,8 +13,15 @@ function Viewcourse() {
 
     const {courseId} = useParams();
     const [course ,setCourse] = useState([]);
-    const [status,setStatus] = useState(false);       
-    const URL = "http://localhost:9000/admin/viewcourse"
+    const [status,setStatus] = useState(false);
+    
+    let type ="admin"
+
+     userInfo?.role == "user"?type="user":type= "admin"
+    
+     console.log('Type:',type);
+
+    const URL = `http://localhost:9000/${type}/viewcourse`
         
     
     useEffect(()=>{
