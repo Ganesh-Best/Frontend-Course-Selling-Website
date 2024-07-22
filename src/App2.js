@@ -30,6 +30,7 @@ import Paymentsuccess from './Components/Paymentsuccess';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import PurchasedCourses from './Components/PurchasedCourses';
 import Footer from './Components/Footer';
+import PlayVideo from './Components/PlayVideo';
 
 function App2() {
     let {userInfo}   =    useContext(UserContext);
@@ -135,7 +136,9 @@ function Menu() {
                 <Route  path="/courses" element={ <Courses/> } />
                 
                 {/* Purchased course route , only visible to User not admin   */}
-                <Route  path="/purchased" element={ userInfo?<PurchasedCourses/> :<Signin/>} />
+                 <Route  path="/purchased" element={ userInfo?<PurchasedCourses/> :<Signin/>} />
+
+                 <Route  path="/playvideo/:key" element={ userInfo?<PlayVideo/> :<Signin/>} />
 
                 <Route  path="/coursedetails/:courseId" element={<CourseDetails/> } />  
                 {/* <Route  path="/coursedetails/:courseId" element={ userInfo?<CourseDetails/> :<Signin/>} />  */}

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Axios from 'axios';
 import { UserContext } from './Context/UserContext';
 import Card from '@mui/material/Card';
@@ -65,13 +65,19 @@ function Viewcourse() {
 
 
 const  Showcourse = ({course})=>{
+      const navigate     =  useNavigate();
+    const watchNow = (key)=>{
+            
+         navigate(`/playvideo/${key}`)
+
+    }
 
  return <Card sx={{display:"flex",flexDirection:"column",padding:'50px',height:"500px"}} >
                 
                  <Stack  >
                       <Typography sx={{marginBottom:"10px"}} variant="h3" textAlign={"center"} color="initial">{course.title }</Typography>   
-                      <div style={{borderTop:"1px solid black",padding:"20px",display:"flex",justifyContent:"space-between",marginTop:"10px",gap:'10px'}} > <span>{course.file1.name}</span> <Button variant="outlined" color="primary"  href={course.file1.url} style={{}} target='_blank'  >Watch </Button></div>
-                      <div style={{borderTop:"1px solid black",padding:"20px",borderBottom:"1px solid black",padding:"20px",display:"flex",justifyContent:"space-between",gap:'10px',marginTop:"10px"}} >{course.file2.name} <Button variant="outlined" color="primary"  href={course.file2.url} style={{}} target='_blank'  >Watch </Button></div>
+                      <div onClick ={()=>watchNow(course.file1.key) } style={{borderTop:"1px solid black",padding:"20px",display:"flex",justifyContent:"space-between",marginTop:"10px",gap:'10px'}} > <span>{course.file1.name}</span> <Button variant="outlined" color="primary"   style={{}} >Watch </Button></div>
+                      <div onClick ={()=>watchNow(course.file2.key) } style={{borderTop:"1px solid black",padding:"20px",borderBottom:"1px solid black",padding:"20px",display:"flex",justifyContent:"space-between",gap:'10px',marginTop:"10px"}} >{course.file2.name} <Button variant="outlined" color="primary" style={{}}  >Watch </Button></div>
                 
                  </Stack>
   <Button variant="text" color="primary">
