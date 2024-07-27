@@ -24,7 +24,8 @@ function Signin() {
    
   
    const {userInfo,setUserInfo} = useContext(UserContext) ;
-   const Base_URL = `http://localhost:9000/${admin}/signin` 
+  const Base_URL = `http://localhost:9000/${admin}/signin`
+  //  const Base_URL =  `https://jsonplaceholder.typicode.com/posts`
    const  navigate       =    useNavigate()
    
     const myStyle ={
@@ -83,11 +84,15 @@ function Signin() {
        }catch (e) {
           setAlert(true);
           
-         if(e.response.status === 404)
-          setAlertMessage(e.response.data.message)
+         
+         if(e.response.status == 404){
+          console.log('status ',e.response.status)
+          setAlertMessage("Username or password is incorrect ")
+         
+        }
          else if(e.response.status === 411)
          setAlertMessage(e.response.data.message)
-        
+         else 
          setAlertMessage("something went wrong ,please try again later :")       
         
        }

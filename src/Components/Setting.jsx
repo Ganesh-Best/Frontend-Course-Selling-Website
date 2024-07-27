@@ -7,35 +7,23 @@ import TabPanel from '@mui/lab/TabPanel';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
 import Axios from 'axios';
+import Typography from '@mui/material/Typography'
+import DisplayAlert from './DisplayAlert';
+
 
 export default function Setting() {
   const [value, setValue] = useState('1');
   
-  const [currentPassword,setCurrentPassword] = useState()
-  const [name,setName] = useState();
-  const [email,setEmail] = useState();
-  const [mobile,setMobile] = useState();
-  const [newPassword , setNewPassword] =  useState();
-  const [confirmPassword ,setConfirmPassword ]  = useState();
+ 
+  
    
-  const Url = "";
-
-   useEffect(() => {
-   
-    ;(async()=>{
-                 
-              
-
-    })()
-   
-   }, []);
+ 
   
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const  data ={name:"Ganesh",email:"hackgan2@gmail.com",mobile:8368788356}
   return (
     <Box sx={{ width: '100%', typography: 'body1',marginTop:"60px" }}>
       <TabContext value={value}>
@@ -48,7 +36,7 @@ export default function Setting() {
         </Box>
         
         <TabPanel value="1">
-            <General props = {data} />
+            <General />
         </TabPanel>
         
         <TabPanel value="2">
@@ -60,27 +48,67 @@ export default function Setting() {
   );
 }
 
-const General = ({mobile,name,email})=>{
- 
+const General = (props)=>{
+
+
+  const [NAME,setName] = useState();
+  const [EMAIL,setEmail] = useState();
+  const [MOBILE,setMobile] = useState();
+  const [loading,setLoading] = useState(true);
+
+  const URL = `http://localhost:9000/user/userinfo`;
+
+  useEffect(() => {
+  
+   ;(async()=>{
+                      
+     const {data} =   await Axios.get(URL,{headers:{
+           token:JSON.parse(localStorage.getItem('userInfo')).token
+         }}) 
+         const {userInfo} = data ;
+         setLoading(false);
+         setName(userInfo.name);
+         setEmail(userInfo.email);
+         setMobile(userInfo.mobile);
+                
+
+   })()
+  
+  }, []);
+
+if(loading )
+  
+  return 
+  <div>
+     <Typography variant="h5" color="initial">Loading Please wait </Typography>
+  </div>
+
+    
     return <div style={{width:"50%",display:"flex",flexDirection:"column",justifyContent:"center",gap:'25px'}}>
    
    <TextField
-     id="Name"
-     value={"Ganesh Singh Bisht"}
-     disabled
-     style={{borderRadius:"50%"}}
+     
+     id="outlined-required"
+     readOnly
+     label="Name*"
+     value={NAME}
+     sx={{color:"red",width:"54%",borderRadius:"3rem"}}
    />
    <TextField
-     id="mobile"
-     value={"hackgan2@gmail.com"}
-     disabled
+     id="outlined-required"
+     readOnly
+     value={EMAIL}
+     label="Email*"
+     
    />
    <TextField
-     id="mobile"
-     value={8368788356}
-     disabled
+     id="outlined-required"
+     label={"Mobile*"}
+     readOnly
+     value={MOBILE}
+     
    />
-   <Button disabled variant="outlined" color="primary" sx={{borderRadius:"40px",width:"160px",alignSelf:"center",padding:"20px"}}>
+   <Button readOnly variant="contained" color="primary" sx={{borderRadius:"40px",width:"160px",alignSelf:"center",padding:"20px"}}>
      Save Profile
    </Button>
 
@@ -89,9 +117,108 @@ const General = ({mobile,name,email})=>{
 
 const Security = ()=>{
 
+  const [currentPassword,setCurrentPassword] = useState()
+  const [newPassword,setNewPassword] = useState();
+  const [confirmPassword,setConfirmPassword] = useState();
+  const [loading,setLoading] = useState(true);
+
+  const [message,setMessage] = useState("");
+  const [key,setKey]= useState();
+  
+  let type = "user";
+
+  useEffect(() => {
+
+    let URL = `http://localhost:9000/${type}/userinfo`;
+   
+    ;(async()=>{
+                      
+     const {data} =   await Axios.get(URL,{headers:{
+           token:JSON.parse(localStorage.getItem('userInfo')).token
+         }})
+         const {userInfo} = data ;
+
+         setLoading(false);
+         setCurrentPassword(userInfo.password);
+         console.log(userInfo);
+                
+
+   })()
+  
+  }, []);
+
+const  changePassword  = async ()=>{
+        
+   if(confirmPassword == newPassword){
+
+        let url = `http://localhost:9000/${type}/passchange`
+         console.log('password prompt' ,newPassword)
+
+      const {data}  =      await Axios.post(url,{},{headers:{
+                'Content-Type':'application/json',
+                token:JSON.parse(localStorage.getItem('userInfo')).token,
+                password:newPassword
+               }})
+
+              console.log("Password has been changed",data);
+
+              setMessage(data.message);
+              console.log('key',key)
+              if(typeof(key) == 'undefined' )
+              setKey(1);
+              else
+               setKey(key+1);
+
+
+   }else{
+      
+    console.log("Prompt for New Password is not matched :" ,confirmPassword,newPassword)
+
+   }
+      
+
+} 
+
+if(loading )
+  
+  return 
+  <div>
+     <Typography variant="h5" color="initial">Loading Please wait </Typography>
+  </div>
+
     return <>
-       <div>
-              Password Change Logic 
+       <div> 
+       <TextField
+          required
+          type="password"
+          id="outlined-required"
+          label="Current Password"
+          value={currentPassword} 
+          sx={{color:"red",width:"54%",borderRadius:"3rem"}}
+        /> <br/>
+        <TextField
+          required
+          type="password"
+          id="outlined-required"
+          label="New Password"
+          onChange={e => setNewPassword(e.target.value)} 
+          style={{fontSize:"20px" ,marginTop:"20px" ,width:"54%"}}
+        /> <br/>
+        <TextField
+          required
+          type="password"
+          id="outlined-required"
+          label="confirm new password" 
+          onChange={e => setConfirmPassword(e.target.value)}
+          sx={{borderRadius:"30%",marginTop:"20px",width:"54%" }}
+        /> <br/>
+
+        <Button variant="contained" onClick={changePassword} color="primary" style={{textTransform:"capitalize",marginTop:"15px",borderRadius:"30px",fontSize:"18px",padding:"13px 23px"}}>
+         Change Password          
+        </Button>
+
+       { key && <DisplayAlert key={key} message = {message}  /> }
+     
        </div>
     </>
 
