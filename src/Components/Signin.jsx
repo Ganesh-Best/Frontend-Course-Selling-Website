@@ -9,7 +9,7 @@ import Alert from '@mui/material/Alert';
 import Axios from 'axios';
 import { UserContext } from './Context/UserContext';
 import { SwitchContext } from './Context/SwitchContext';
-
+import { BASE_URL } from './Comp/Config';
 
 
 function Signin() {
@@ -24,7 +24,7 @@ function Signin() {
    
   
    const {userInfo,setUserInfo} = useContext(UserContext) ;
-  const Base_URL = `http://localhost:9000/${admin}/signin`
+  const URL = `${BASE_URL}/${admin}/signin`
   //  const Base_URL =  `https://jsonplaceholder.typicode.com/posts`
    const  navigate       =    useNavigate()
    
@@ -47,14 +47,15 @@ function Signin() {
 
        try {
              
-           const response  = await Axios.post(Base_URL,{},{
+           const response  = await Axios.post(URL,{},{
              headers:{
                'Content-Type': 'application/json',
                'username':email,
                "password":password
              }
            })
-   
+           
+
            
            if(response.status === 200){
                    
@@ -71,7 +72,7 @@ function Signin() {
                   
 
                  if(admin == "user"){
-                   navigate2('/home')
+                   navigate2('/')
                  }
                  
                     

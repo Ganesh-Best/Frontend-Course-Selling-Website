@@ -6,6 +6,7 @@ import Axios from 'axios';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { BASE_URL } from './Comp/Config';
 
 
    
@@ -17,7 +18,7 @@ function AdminCourses() {
  
     useEffect(()=>{
 
-          let url = "http://localhost:9000/admin/courses"
+          let url = `${BASE_URL}/admin/courses`
                    
           console.log("context Api data",userInfo)
                 

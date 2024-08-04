@@ -27,7 +27,8 @@ function DisplayAlert({message}) {
  
 
     return (
-    <div style={{display:display , width:"55%",marginTop:"10px" }} >
+      // width:"55%",marginTop:"10px" 
+    <div style={{display:display,width:"55%",marginTop:"10px" }} >
     <Alert variant='outlined' icon={<CheckIcon fontSize="inherit" />} onClose={() => {}} severity={"info"}>
      {message}
     

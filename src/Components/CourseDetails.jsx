@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from './Comp/Config';
 
 
 
@@ -23,7 +24,7 @@ function CourseDetails() {
     const {courseId} = useParams();
 
      
-     const URL = 'http://localhost:9000/user/coursedetail';
+     const URL = `${BASE_URL}/user/coursedetail`;
      const option = {
         headers:{
             'Content-Type': 'multipart/form-data',
@@ -153,7 +154,7 @@ function Purchase({course,loading}){
        
        console.log('purchased',amount ,userInfo.token,userInfo.role)
 
-        const {data:{order,key_secret}} = await Axios.post('http://localhost:9000/user/checkout',{},{headers:{
+        const {data:{order,key_secret}} = await Axios.post(`${BASE_URL}/user/checkout`,{},{headers:{
             token:userInfo.token,
             amount
           }})
@@ -168,7 +169,7 @@ function Purchase({course,loading}){
         "description": "Test Transaction",
         "image": " ",
         "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": `http://localhost:9000/user/paymentverify?email=${userInfo.email}&id=${id}`,
+        "callback_url": `${BASE_URL}/user/paymentverify?email=${userInfo.email}&id=${id}`,
         "prefill": {
             "name": userInfo.name,
             "email": userInfo.email,

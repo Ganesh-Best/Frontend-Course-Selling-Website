@@ -2,6 +2,7 @@
 import React ,{useEffect,useState} from 'react'; 
 import { useParams, useSearchParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography'
+import { BASE_URL } from './Comp/Config';
 
 
 
@@ -34,7 +35,7 @@ import Typography from '@mui/material/Typography'
                         
               console.log('reference value -:',reference,paymentId)
               try {
-                 const  {data}   =   await Axios.get(`http://localhost:9000/user/paymentinfo?${reference}=${paymentId}`,{ 
+                 const  {data}   =   await Axios.get(`${BASE_URL}/user/paymentinfo?${reference}=${paymentId}`,{ 
                                                     headers:{
                                                       'Content-Type':'application/json',
                                                        'token': userInfo.token

@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
+import { BASE_URL } from './Comp/Config';
 
 
 function Viewcourse() {
@@ -21,7 +22,7 @@ function Viewcourse() {
     
      console.log('Type:',type);
 
-    const URL = `http://localhost:9000/${type}/viewcourse`
+    const URL = `${BASE_URL}/${type}/viewcourse`
         
     
     useEffect(()=>{

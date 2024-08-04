@@ -10,7 +10,7 @@ function useAxiosFetch(url,option={}) {
      useEffect(() => {
         
         ;( async()=>{
-               
+               console.log('Axios fetch',url)       
                try {
                 const response   =  await Axios.get(url,option)
                 setCourses(response.data.courses)

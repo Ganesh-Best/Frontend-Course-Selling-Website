@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from './Comp/Config';
 
 
 
@@ -19,7 +20,7 @@ function PurchasedCourses() {
      const [error,setError] = useState(false);
     
     useEffect(() => {
-           const  URL = "http://localhost:9000/user/myCourses"      
+           const  URL = `${BASE_URL}/user/myCourses`      
             
            ;( async()=>{
                    

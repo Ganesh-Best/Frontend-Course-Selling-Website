@@ -131,7 +131,7 @@ function Menu() {
                 <Route  path="/setting" element={userInfo?<Setting/>:<Signin/>} />
                 <Route  path="/viewcourse/:courseId" element={userInfo?<Viewcourse/>:<Signin/>} />
                 <Route  path="/Course/:courseId" element={ userInfo?<Course/>:<Signin/>} />
-                <Route  path="/home" element={ <Home/>} />
+                {/* <Route  path="/home" element={ <Home/>} /> */}
                 {/* <Route  path="/home" element={ userInfo?<Home/> :<Signin/>} /> */}
                 <Route  path="/courses" element={ <Courses/> } />
                 
@@ -145,7 +145,7 @@ function Menu() {
                 <Route  path="/paymentsuccess" element={ userInfo?<Paymentsuccess/> :<Signin/>} />
             </Routes>   
 
-            <Footer/>  
+           
      </div>
             
   
@@ -160,7 +160,7 @@ function Sidebar( { toggleSidebar }) {
     const signOut = useCallback(()=>{
  
         localStorage.removeItem("userInfo");
-         window.location ="/home";
+         window.location ="/";
    
    },[])
      
@@ -174,7 +174,7 @@ function Sidebar( { toggleSidebar }) {
          <div>
           <ul className='sidebar-ul'>
             
-            <li><Link to="/home" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
+            <li><Link to="/" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
 
             <li><Link to="/courses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
             
@@ -199,7 +199,7 @@ function Sidebar( { toggleSidebar }) {
          <div>
           <ul className='sidebar-ul'>
             
-            <li><Link to="/home" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
+            <li><Link to="/" className='links'><IoHomeOutline style={{fontSize:"28px"}}  /> Home</Link></li>
 
             <li><Link to="/courses" className='links'><FiBook style={{fontSize:"28px"}} />Courses</Link></li>
             

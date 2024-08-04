@@ -7,10 +7,11 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { BASE_URL } from './Comp/Config';
 
 
 function Courses() { 
-    const URL = 'http://localhost:9000/user/course'
+    const URL = `${BASE_URL}/user/course`
    // const token = JSON.parse(localStorage.getItem('userInfo')).token;
    const option = { headers:{
                      'Content-Type':'application/json',

@@ -10,8 +10,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import { BASE_URL } from './Comp/Config.js';
 
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer.jsx';
 
 function Home() {
   return (
@@ -19,7 +21,7 @@ function Home() {
       <ImageSlider/>
       <Courses/>
       <About/>
-      
+      <Footer/>
       
     </div>
   )
@@ -27,12 +29,14 @@ function Home() {
 
 function Courses(){
 
+ 
+
   //  const token = JSON.parse(localStorage.getItem('userInfo')).token;
    const option = { headers:{
                      'Content-Type':'application/json',
                      
                   } }
-  const {courses,error,loading}   =   useAxiosFetch("http://localhost:9000/user/courses/feature",option)
+  const {courses,error,loading}   =   useAxiosFetch(`${BASE_URL}/user/courses/feature`,option)
 
    console.log(courses,error,loading)
 

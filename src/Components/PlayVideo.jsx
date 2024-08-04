@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Axios from 'axios';
 import Typography from '@mui/material/Typography'
+import { BASE_URL } from './Comp/Config';
 
 function PlayVideo() {
          
@@ -15,7 +16,7 @@ function PlayVideo() {
         ;(async()=>{
 
             try {
-                const {data:{URL}}    = await Axios.get('http://localhost:9000/user/video',{headers:{
+                const {data:{URL}}    = await Axios.get(`${BASE_URL}/user/video`,{headers:{
                         'token': JSON.parse(localStorage.getItem('userInfo')).token,
                         key
                        }});       

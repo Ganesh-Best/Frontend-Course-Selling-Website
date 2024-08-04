@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Axios from 'axios';
 import Typography from '@mui/material/Typography'
 import DisplayAlert from './DisplayAlert';
+import { BASE_URL } from './Comp/Config';
 
 
 export default function Setting() {
@@ -49,14 +50,21 @@ export default function Setting() {
 }
 
 const General = (props)=>{
-
-
+ 
+  
+  // const [type,setType] = useState("user");
   const [NAME,setName] = useState();
   const [EMAIL,setEmail] = useState();
   const [MOBILE,setMobile] = useState();
   const [loading,setLoading] = useState(true);
 
-  const URL = `http://localhost:9000/user/userinfo`;
+  let type= "user";
+
+  if(JSON.parse(localStorage.getItem('userInfo')).role=="admin")
+     type="admin";
+
+
+  const URL = `${BASE_URL}/${type}/userinfo`;
 
   useEffect(() => {
   
@@ -70,7 +78,6 @@ const General = (props)=>{
          setName(userInfo.name);
          setEmail(userInfo.email);
          setMobile(userInfo.mobile);
-                
 
    })()
   
@@ -127,10 +134,13 @@ const Security = ()=>{
   
   let type = "user";
 
+ if(JSON.parse(localStorage.getItem('userInfo')).role == 'admin')
+   type="admin"
+    
   useEffect(() => {
 
-    let URL = `http://localhost:9000/${type}/userinfo`;
-   
+    let URL = `${BASE_URL}/${type}/userinfo`;
+        
     ;(async()=>{
                       
      const {data} =   await Axios.get(URL,{headers:{
@@ -151,7 +161,7 @@ const  changePassword  = async ()=>{
         
    if(confirmPassword == newPassword){
 
-        let url = `http://localhost:9000/${type}/passchange`
+        let url = `${BASE_URL}/${type}/passchange`
          console.log('password prompt' ,newPassword)
 
       const {data}  =      await Axios.post(url,{},{headers:{

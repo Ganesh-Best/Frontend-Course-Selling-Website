@@ -4,6 +4,8 @@ import { UserContext } from './Context/UserContext';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import Button from '@mui/material/Button'
+import Footer from './Footer';
+import { BASE_URL } from './Comp/Config';
 
 
 
@@ -15,12 +17,12 @@ function AdminHome() {
     
      useEffect( () => {
 
-                const BASE_URL = "http://localhost:9000/admin/info"
+                const URL = `${BASE_URL}/admin/info`
         
                 ;( async()=>{
                         
                     try {
-                        const response   =  await Axios.get(BASE_URL,{
+                        const response   =  await Axios.get(URL,{
                                  headers:{
                                     'Content-Type':'application/json',
                                     'token':JSON.parse(localStorage.getItem('userInfo')).token,
@@ -69,6 +71,7 @@ function AdminHome() {
  
       
        </div>
+       <Footer/>
     </>
 
   

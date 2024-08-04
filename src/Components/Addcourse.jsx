@@ -8,6 +8,10 @@ import Axios from 'axios' ;
 import { useContext } from 'react';
 import { UserContext } from './Context/UserContext';
 import RichTextEditor from './Comp/RichTextEditor';
+import Loader from './Comp/Loader';
+import { BASE_URL } from './Comp/Config';
+
+
 function Addcourse() {
           
      const {userInfo }  =   useContext(UserContext);
@@ -21,12 +25,18 @@ function Addcourse() {
      const [file2,setFile2] = useState(""); 
      const [published,setPublished] = useState(false);
      const [featured ,setFeatured] = useState(false);
-         const myStyle ={
+     const [status,setStatus] = useState(false);
+     const [error,setError] = useState(false);
+
+      const myStyle ={
         "width":"600px",
         "padding":"15px"       
       }
 
       const addCourse = async (e)=>{ 
+            
+        if(title&&description&&image&&price&&file&&file2&&introVideo&&syallabus){
+                setStatus(true);
 
                 const formData =        new FormData()
 
@@ -40,53 +50,46 @@ function Addcourse() {
                 formData.append('syallabus',syallabus);
                 formData.append('published',published);
                 formData.append('featured',featured)
-
-           console.log("Add course butting clicked :")
-           console.log(formData)
-
-         const  url = "http://localhost:9000/admin/course"
-            
-         console.log('published status',published);
-          
-             const response = await   Axios.post(url,formData,{
-                headers:{
-                    'Content-Type':'multipart/form-data',
-                    'token':userInfo.token
-                }
                 
-               })       
-
-               console.log(response)
-                alert("Course has been Created Successfully :") 
-         
-        // formData.append('image', image)
-        // formData.append('price', price)
-        // formData.append('files', file)
-        //formData.append('files', file)
+         const  url = `${BASE_URL}/admin/course`
+            
+               
+          try {
+               const response = await   Axios.post(url,formData,{
+                  headers:{
+                      'Content-Type':'multipart/form-data',
+                      'token':userInfo.token
+                  }
+                  
+                 })       
+                  setStatus(false);
+  
+                  alert("Course has been Created Successfully :") 
+           
+          } catch (e) {
+            setTimeout(() => {
+              setStatus(false)
+              setError(true); 
+            }, 500);
+  
+          }
         
-            // fetch(url,{
-            //     method:"POST",
-            //     headers:{
-            //         "Content-Type":"application/json",
-            //         "token":localStorage.getItem("token")
-            //     },
-            //     body:JSON.stringify({
-            //         "title":title,
-            //         "description":description,
-            //         "image":image,
-            //         "price":price,
-            //         "published":published,
-            //     })
-            // }).then(response=>response.json()).then(data=>{
-            //     console.log(data)
-            //    alert(`Course has been published Id: ${data.id}`,)
-            // //    setTitle("")
-            // //    setDescription("")
-            // //    setImage("")
-
-            // }).catch(error=>console.log(error))
-
+        } else
+          alert("Please fill all the fields :")     
+       
       }
+
+  if(status){
+    return  <div style={{display:'flex',flexDirection:"column",justifyContent:"center",alignItems:"center"}}><Loader />
+         <Typography variant="h5" color="initial"> please wait ,course is uploading.....</Typography>
+    </div>
+  }  
+  
+  if(error)
+    return <div>
+               Ops something went wrong :
+    </div>
+
   return (
       <div style={{paddingTop:"40px",display:"flex","flexDirection":"row","justifyContent":"center"}}>
     <Card variant="outlined" style={myStyle}>    
@@ -96,7 +99,7 @@ function Addcourse() {
     <TextField  fullWidth={true} value={price} onChange={event=>setPrice(event.target.value)} id="price" label="price" variant="outlined" /> <br/><br/>
     <div style={{display:'flex',flexDirection:"column",height:'auto'}}>
     <label>Syallabus</label>
-    <RichTextEditor setSyallabus={setSyallabus} />
+    <RichTextEditor setSyallabus={setSyallabus} width={'100%'} />
     </div>
     <br/>
     <div style={{display:'flex',flexDirection:"column",height:'auto'}}>

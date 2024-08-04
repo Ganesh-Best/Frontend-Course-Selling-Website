@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Axios from 'axios';
 import { SwitchContext } from './Context/SwitchContext';
+import { BASE_URL } from './Comp/Config';
 
 function Signup() {
       let status ;
@@ -34,7 +35,7 @@ function Signup() {
 
   const signup = async(event)=>{
        
-       let url = `http://localhost:9000/${admin}/signup`
+       let url = `${BASE_URL}/${admin}/signup`
  
                       
    try {
@@ -156,7 +157,7 @@ function Signup() {
    
     <TextField fullWidth={true} value={password} onChange={(event)=>setPassword(event.target.value)}  id="password" label="Password" variant="outlined" type={"password"} /> <br/> <br/>   
     <Button size="large" variant="contained" onClick={signup}  >Signup</Button>
-    <Alert severity = {`${error?"error":"success"}`}  variant='filled'  sx={{marginTop:"10px",display:`${alert?"flex":"none"}`, height:"28px" }}  >
+    <Alert severity = {`${error?"error":"success"}`}  variant='filled'  sx={{marginTop:"10px",display:`${alert?"flex":"none"}`}}  >
        {alertMessage}
     </Alert>
     <Typography sx={{marginTop:'10px'}} variant="body1" color="initial">Sign in as  <Button variant="text" color="primary" onClick={toggleUser}> {(admin == "user")?"admin":"user"  }  </Button></Typography>

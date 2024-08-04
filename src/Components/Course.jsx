@@ -4,6 +4,10 @@ import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { UserContext } from './Context/UserContext';
 import {useNavigate} from 'react-router-dom'; 
+import RichTextEditor from './Comp/RichTextEditor';
+import Loader from './Comp/Loader';
+import DisplayAlert from './DisplayAlert';
+import { BASE_URL } from './Comp/Config';
 
 function Course() {
     const  {userInfo} = useContext(UserContext);
@@ -12,6 +16,7 @@ function Course() {
     const [status ,setStatus] = useState(true);
     const [error,setError] = useState(false);
   
+  
      useEffect(()=>{
          
        
@@ -19,7 +24,7 @@ function Course() {
 
 
               try {
-                 const URL = "http://localhost:9000/admin/course"
+                 const URL = `${BASE_URL}/admin/course`
                       
                  const response =  await Axios.get(`${URL}/${courseId}`,{
                           headers:{
@@ -59,7 +64,10 @@ function Course() {
 
      
  if( status )
- return <div>Loading....</div>
+ return  <div style={{display:'flex',flexDirection:"column",justifyContent:"center",alignItems:"center"}}><Loader />
+ <Typography variant="h5" color="initial"> please wait ,course is uploading.....</Typography>
+</div>
+
   
   if(error){
       if(error.response.status == 404)
@@ -74,15 +82,20 @@ function Course() {
         
        <Grid  container justifyContent={"center"} spacing={0}>
 
-          <Grid item lg={8} md={12} sm={12} >
-             <UpdateCourse course = {course} setCourse ={setCourse} />
+          <Grid item lg={8} md={12} sm={12}  >
+             <UpdateCourse course = {course} setCourse ={setCourse} setStatus={setStatus}  />
+            
           </Grid>
 
           <Grid item lg={4} md={12} sm={12} >
              <CourseCard course={course}/>
+             
           </Grid>
-         
+       
        </Grid>
+
+       
+       
     </div>
   )
 }
@@ -109,52 +122,44 @@ function Graytopper(props){
   </div>
 }
 
-function UpdateCourse({course,setCourse}){
+function UpdateCourse({course,setCourse,setStatus}){
      const  {userInfo} = useContext(UserContext);
      const [title,setTitle] = useState(course.title)
      const [description,setDescription] = useState(course.description)
      const [image,setImage] = useState(course.image)
      const [price,setPrice] = useState(course.price)
      const [published,setPublished] = useState(course.published)
-     const [file1,setFile1] = useState(course.file1.key);
-     const [file2,setFile2] = useState(course.file2.key);
+     const [file1,setFile1] = useState(course.file1);
+     const [file2,setFile2] = useState(course.file2);
+     const [featured ,setFeatured] = useState(false);
+     const [introVideo ,setIntroVideo ]  = useState("");
+     const [syallabus,setSyallabus] = useState(course.syallabus)
      
+
      const courseUpdate = async()=>{
-               const URL = "http://localhost:9000/admin/course"
+          
+        if(title&&price&&introVideo&&file1&&file2&&description&&image){
+               const URL = `${BASE_URL}/admin/course`
+               setStatus(true);
           const response =  await Axios.put(`${URL}/${course._id}`,{
-                title,description,image,price,published,file1,file2
+                title,description,image,price,published,file1,file2,introVideo,syallabus,featured
                },{
                 headers:{
                   'Content-Type':"multipart/form-data",
                   "token":userInfo.token
                 }
                }) 
-
+               setStatus(false)  
                console.log(response)
-
+              
                setCourse(response.data.course);
-               alert("Course has been updated Successfully :");
+               window.alert("Course has been updated Successfully :");
+               
+              }else
+                alert("please fill all required fields: ")
       
       
       
-      // Axios.put('http://localhost:9000/admin/course/'+course.id,{
-      //       title,
-      //       description,
-      //       image,
-      //       price,
-      //       "published":true
-      //      },{
-      //       headers:{
-      //         "token":localStorage.getItem("token"),
-      //         "Content-Type":"multipart/form-data"
-      //       }
-      //      })
-      //      .then((response) => {
-
-      //      setCourse(response.data.course)
-           
-      //      }).catch((error)=>{console.log(error,course.id)})
-
      }
      
  return <div style={{ display:"flex",justifyContent:"center",marginTop:"50px"}}>
@@ -189,22 +194,44 @@ function UpdateCourse({course,setCourse}){
                onChange={event=>setPrice(event.target.value)}
                style={{marginTop:"10px"}}
              />
+             <div style={{display:'flex',flexDirection:"column",height:'auto'}}>
+             <label>Syallabus</label>
+             <RichTextEditor syallabus={syallabus}  setSyallabus={setSyallabus} width={"100%"} />
+             </div>
+             <div style={{display:'flex',flexDirection:"column",height:'auto'}}>
+             <label>Intro Video</label>
+             <TextField  type='file' name="introVideo" onChange={(e)=>{setIntroVideo(e.target.files[0])  }}  />
+             </div>
+             <div style={{display:'flex',flexDirection:"column",height:'auto'}}>
+             <label>Video 1</label>
               <TextField  
               type='file' 
               name="file" 
               onChange={(e)=>{setFile1(e.target.files[0])  }}  
               /> 
+              </div>
+              <div style={{display:'flex',flexDirection:"column",height:'auto'}}>
+              <label>Video 2</label>
               <TextField  
               type='file' 
               name="file2" 
               onChange={(e)=>{setFile2(e.target.files[0]) }} 
-               /> 
+               />
+               </div> 
              <Button  
                size="large" 
                variant="outlined"  
                onClick = {(e)=>setPublished(!published) }  
                > {(published)?"Published":"Not Published"}
                </Button>
+             <Button  
+              size="large" 
+              variant="outlined" 
+              sx={{textTransform:"capitalize"}} 
+              onClick = {(e)=>setFeatured(!featured) }  
+              > 
+              {(featured)?"featured":"Not featured"}
+              </Button>
              
              <Button style={{marginTop:"10px"}} onClick={courseUpdate} size="large" variant="contained" color="primary">
                Update Course
