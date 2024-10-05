@@ -1,4 +1,4 @@
-const  BASE_URL = "https://backend-course-selling-website.onrender.com";
+let  BASE_URL = "https://backend-course-selling-website.onrender.com";
 let production = true ;
  
  if(production)
